@@ -7,7 +7,7 @@
 ;
 ; Model Lighthouse Controller
 ;-------------------------------------------------------------------------------
-; Copyright (C)2015-2019 HandCoded Software Ltd.
+; Copyright (C)2016-2019 HandCoded Software Ltd.
 ; All rights reserved.
 ;
 ; This work is made available under the terms of the Creative Commons
@@ -19,9 +19,11 @@
 ;
 ; Notes:
 ;
+; In memory of my friend, Robert Frost.
 ;
 ; Pin out:
 ;
+;                                     12F1840
 ;                                    +--------+
 ;                          VCC   -> [|   \/   |] <- GND
 ;                          RX    -> [|        |] -> RED
@@ -57,7 +59,7 @@ BLD_CONFIG2     =       h'ffff'
                 __config _CONFIG1, STD_CONFIG1 & BLD_CONFIG1
                 __config _CONFIG2, STD_CONFIG2 & BLD_CONFIG2
 
-                __idlocs h'1902'
+                __idlocs h'1903'
 
 ;===============================================================================
 ; Hardware Configuration
@@ -856,7 +858,7 @@ SkipPattern:
                 movwf   START+.1
                 btfss   FLAGS,.7                ; ROM Source?
                 bra     WrapPointer
-                movlw   low UserPatterns        ;
+                movlw   low UserPatterns        ; No, EEPROM
                 movwf   START+.0
                 movlw   high UserPatterns
                 movwf   START+.1
@@ -894,24 +896,32 @@ FlashRead:
 ; ROM Pattern Table
 ;-------------------------------------------------------------------------------
 
+; Patterns start with a count of the number of colour changes followed by a
+; definition of each change.
+;
+; Simple colour changes like OP_RED, OP_GREEN, OP_WHITE, etc. are followed by
+; the duration expressed in 1/10ths of a second.
+;
+; The code supports an arbtuary colour select by means of OP_RGB code which is
+; followed by the red, green and blue percentages (0-100) and a duration value.
+
 Patterns:
 
-                de      .3
-                de      OP_RED,         .10
-                de      OP_GREEN,       .10
-                de      OP_BLUE,        .10
-
-                de      .2
-                de      OP_WHITE,       .2
-                de      OP_BLACK,       .2
+;===============================================================================
+; UK Lighthouses
+;-------------------------------------------------------------------------------
 
 ; Alderney - Fl(4) W 15s
 
-                de      .4
+                de      .8
                 de      OP_WHITE,       .10
-                de      OP_BLACK,       .27
+                de      OP_BLACK,       .10
                 de      OP_WHITE,       .10
-                de      OP_BLACK,       .28
+                de      OP_BLACK,       .10
+                de      OP_WHITE,       .10
+                de      OP_BLACK,       .10
+                de      OP_WHITE,       .10
+                de      OP_BLACK,       .80
 
 ; Anvil Point - Fl W 10s
 
@@ -1238,6 +1248,19 @@ EEPROM          de      h'00'                   ; Default source is ROM
 UserPatterns:
 
 ; RGB Test
+
+                de      .11
+                de      OP_BLACK,               .1
+                de      OP_RGB, .10, .10, .10,  .1
+                de      OP_RGB, .20, .20, .20,  .1
+                de      OP_RGB, .30, .30, .30,  .1
+                de      OP_RGB, .40, .40, .40,  .1
+                de      OP_RGB, .50, .50, .50,  .1
+                de      OP_RGB, .60, .60, .60,  .1
+                de      OP_RGB, .70, .70, .70,  .1
+                de      OP_RGB, .80, .80, .80,  .1
+                de      OP_RGB, .90, .90, .90,  .1
+                de      OP_WHITE,               .1
 
                 de      .5
                 de      OP_WHITE,       .20
