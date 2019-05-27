@@ -6,7 +6,7 @@ The circuit is very simple. A small PIC micro-controller generates three PWM sig
 
 ![Schematic](schematics/LH-ONE.png)
 
-I even put together a small two-sided PCB to keep things neat and tidy.
+I put together a small two-sided PCB to keep things neat and tidy.
 
 ![Partially Populated PCB](images/lh-one.png)
 
@@ -21,3 +21,10 @@ Someone in the hackspace thought it needed a model to show it off and 3D-printed
 Sadly Bob passed away in May 2017 following a stroke and the project was not finished.
 
 In memory of my friend I've decided to clean up the code, schematics and PCB design then release it all on Github.
+
+## To Do:
+
+These tasks remain to be completed:
+
+1. I need to complete and rationalise the UK lighthouse characteristics.
+2. I intended to use the UART to communicate with a PC hosted application that allows custom patterns to be created and downloaded.
